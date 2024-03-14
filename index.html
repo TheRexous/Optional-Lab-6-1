@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Optional Lab 6-1</title>
+        <script>
+            function vote() {
+                var t = "Your favorite sport is: ";
+                for (i = 0; i < document.myform.sports.length; i++) {
+                    if (document.myform.sports[i].checked == true) {
+                        t = t + document.myform.sports[i].value;
+                    }
+                }
+                if (t == "Your favorite sport is: ") {
+                    document.getElementById("txt").value = "Choose a sport";
+                } else {
+                    document.getElementById("txt").value = t;
+                    document.getElementById("txt1").value = t;
+                    document.getElementById("txt2").value = t;
+                }
+            }
+            function upperCase() {
+                var x = document.getElementById("txt").value;
+                document.getElementById("txt").value = x.toUpperCase();
+            }
+            function SayHello() {
+                alert("Your mouse is over the text!");
+            }
+            function SayGoodbye() {
+                alert("Your mouse has left the text!");
+            }
+        </script>
+    </head>
+    <body>
+        <h3>CIW Advanced HTML5 and CSS3 Specialist</h3>
+        <hr/>
+        <h4>Event Handler Examples</h4>
+        Vote for your favorite sport:
+        <form name="myform">
+            <input type="radio" name="sports" value="Football" />Football<br/>
+            <input type="radio" name="sports" value="Hockey" />Hockey<b />
+            <input type="radio" name="sports" value="Auto Racing" />Auto Racing<br/>
+            <input type="radio" name="sports" value="MMA" />MMA<br/>
+            <input type="radio" name="sports" value="Basketball" />Basketball<br/>
+            <input type="radio" name="sports" value="Tennis" />Tennis<br/>
+            <input type="radio" name="sports" value="Golf" />Golf<br/>
+            <p><input type="button" value="VOTE" onclick="vote()" /> <input type="reset" value="RESET" /></p>
+            <p><input type="text" id="txt" size="40" onblur="upperCase()" /> Click in then out!</p>
+            <p><input type="text" id="txt1" size="40" onmouseover="SayHello()" /> Hover over this field!</p>
+            <p><input type="text" id="txt2" size="40" onmouseout="SayGoodbye()" /> Hover this field then away!</p>
+        </form>
+    </body>
+</html>
+Browser: Open the file OL_6-1.htm. Select a sport and submit the form. The event handler will pass a call to the function, which will populate the text boxes, as shown in Figure OL6-1.
+
+The figure shows the Lab 6-3 page in the Chrome browser. It displays a JavaScript form. The form contains a label "Vote for your favorite sport:" with seven radio buttons as Football, Hockey, Auto Racing, MMA, Basketball, Tennis, and Golf. The "Tennis" radio button is selected. The VOTE and RESET buttons are below the radio buttons. Three text boxes with labels are given as "Click in then click out!", "Hover over this field!", and "Hover over this field then move away!". Each text box contains the value as "Your favorite sport is: Football".
+Figure OL6-1: Populating text boxes using an event handler to pass a call to a function
+Browser: Click inside the top text box. Then click outside. You will see that the event handler (onblur) will change the text to uppercase for that text box.
+Browser: Move your cursor over the bottom two text boxes. On the middle text box, the event handler triggers when you are over the textbox. On the bottom text box, the event handler triggers when you leave the text box.
+Close your browser and text editor.
+In this lab, you saw some of the functionality that event handlers can bring to a Webpage. Consider ways that you can use event handlers for various purposes on your pages.
+	Files for Optional Lab 6-2: Calling functions and using arguments
+Create a folder named "CIW" and keep the downloaded files in it. Unzip the downloaded zip file to use it.
+
+Optional Lab 6-2: Calling functions and using arguments
+In this optional lab, you will run a program that uses JavaScript functions and arguments. Functions in JavaScript can receive a varying number of arguments. Also, explicit placeholders need not be defined in the function signature to use these arguments.
+
+This Optional Lab provides an example of how to pass values through a function in a simple, yet engaging manner. You will study the code and try the form, but not perform any scripting. The code is provided in your lab files
+Editor: Open OL_6-2.htm in your student lab files. Examine the code for a form, which appears as follows:
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Optional Lab 6-2</title>
+        <script>
+            // return the value of the radio button that is checked
+            // return an empty string if none are checked, or
+            // there are no radio buttons
+            function getCheckedValue(radioObj) {
+                if (!radioObj) 
+                    return "";
+                var radioLength = radioObj.length;
+                if (radioLength == undefined)
+                    if (radioObj.checked) 
+                        return radioObj.value;
+                    else return "";
+                for (var i = 0; i < radioLength; i++) {
+                    if (radioObj[i].checked) {
+                        return radioObj[i].value;
+                    }
+                }
+                return "";
+            }
+            // set the radio button with the given value as being checked
+            // do nothing if there are no radio buttons
+            // if the given value does not exist, all the radio buttons
+            // are reset to unchecked
+            function setCheckedValue(radioObj, newValue) {
+                if (!radioObj) 
+                    return;
+                var radioLength = radioObj.length;
+                if (radioLength == undefined) {
+                    radioObj.checked = radioObj.value == newValue.toString();
+                    return;
+                }
+                for (var i = 0; i < radioLength; i++) {
+                    radioObj[i].checked = false;
+                    if (radioObj[i].value == newValue.toString()) {
+                        radioObj[i].checked = true;
+                    }
+                }
+            }
+        </script>
+        <style type="text/css">
+            <!-- label {
+                background-color: #fdfdf0;
+                color: black;
+                border: 2px outset #8b8378;
+                padding: 0.1em 2ex 0.1em 0.5ex;
+                line-height: 1.6em;
+            }
+            //-->
+        </style>
+    </head>
+    <body>
+        <h2>CIW Advanced HTML5 and CSS3 Specialist</h2>
+        <h3>JavaScript Get or Set Checked Radio Value</h3>
+        <form name="radioExampleForm" method="get" action="" onsubmit="return false;">
+            <p>
+                <label for="number0"> <input type="radio" value="0" name="number" /> Zero</label>
+                &nbsp;<label for="number1"> <input type="radio" value="1" name="number" /> One</label> 
+                &nbsp;<label for="number2"> <input type="radio" value="2" name="number" /> Two</label> 
+                &nbsp;<label for="number3"> <input type="radio" value="3" name="number" /> Three</label> 
+                &nbsp;<label for="number4"> <input type="radio" value="4" name="number" /> Four</label>
+            </p>
+            <p>
+                <input type="button" onclick="alert('Checked value is: '+getCheckedValue(document.forms['radioExampleForm'].elements['number']));" value="Show Checked Value" />
+                &nbsp;<input type="button" onclick="setCheckedValue(document.forms['radioExampleForm'].elements['number'], '2');" value="Set Checked to Two" /> 
+                &nbsp;<input type="button" onclick="setCheckedValue(document.forms['radioExampleForm'].elements['number'], '4');" value="Set Checked to Four" /> 
+                &nbsp;<input type="button" onclick="setCheckedValue(document.forms['radioExampleForm'].elements['number'], '');" value="Uncheck All" />
+            </p>
+        </form>
+    </body>
+</html>
+Browser: Open the file OL_6-2.htm. You will see the form shown in Figure OL6-2.
+
+The figure shows the Lab 6-2 page in the Chrome browser. It displays a heading that reads "CIW Advanced HTML5 and CSS3 Specialist", a label "JavaScript Get or Set Checked Radio Value" with five radio buttons and four buttons. The radio buttons are Zero, One, Two, Three, and Four. The buttons are Show Checked Value, Set Checked to Two, Set Checked to Four, and Uncheck All.
+Figure OL6-2: JavaScript Functions form
+Browser: Study the form. It contains five radio buttons and four buttons, each with a different purpose, which gets passed to the function. Depending on the radio button checked, it will return the value after it has been passed through the function. If there is no input (no radio buttons checked), then the form will gracefully pass a blank. This process is called validation: Every choice offered to a user is handled and returned through the program, even if the input is wrong. Gracefully handling validation is an important part of scripting.
+Browser: Select one of the number values, then click the Show Checked Value button. You will see an alert that shows the value of the radio button you selected, as shown in Figure OL6-3. If you do not select a value radio button, the alert will show blank. The other buttons can select a value for the user, or clear the radio buttons.
+
+The figure shows the Lab 6-2 page in the Chrome browser. It displays an Alert message that reads "Checked value is: 0" and an OK button.
+Figure OL6-3: Alert showing the checked value
+Close your browser and text editor.
+In this lab, you ran a program that uses JavaScript functions and arguments. This example shows how to pass values through a function in a very simple, yet engaging manner. Functions in JavaScript can receive a varying number of arguments. Also, explicit placeholders need not be defined in the function signature to use these arguments.
+	Files for Optional Lab 6-3: Using a JavaScript conversion function
+Create a folder named "CIW" and keep the downloaded files in it. Unzip the downloaded zip file to use it.
+
+Optional Lab 6-3: Using a JavaScript conversion function
+This optional lab will provide an opportunity to use the JavaScript parseFloat() conversion function.
+Editor: Open OL_6-3.htm in your student lab files.
+Editor: In the first <script> block, examine the addNumbers() function that has been defined for you:
+
+function addNumbers(arg1, arg2) {
+    var result = arg1 + arg2;
+    return result;
+}
+Editor: This simple function receives two values, adds them together and returns the result. In the second <script> block, examine the following code:
+
+alert("Please enter a numerical value in each of the following prompt dialog boxes. \nThe two numbers will be added together.");
+var num1 = prompt("Please enter a numerical value.","");
+var num2 = prompt("Please enter a numerical value.","");
+document.write("<p>The result of the addNumbers() function is: <strong>" + addNumbers(num1, num2) + "</strong></p>");
+Editor: Recall that the return value of a prompt() method is a string. Determine the various places in the code to use the parseFloat() function to convert the user's input to a numerical value. The parseFloat() function can be used in several places to achieve the desired result. Enter the code:
+
+alert("Please enter a numerical value in each of the following prompt dialog boxes. \nThe two numbers will be added together.");
+var num1 = prompt("Please enter a numerical value.","");
+var num2 = prompt("Please enter a numerical value.","");
+document.write("<p>The result of the addNumbers() function is: <strong>" + addNumbers( parseFloat(num1), parseFloat(num2)) + "</strong></p>");
+Editor: Save OL_6-3.htm.
+Browser: Open OL_6-3.htm. You will see an alert dialog box informing the user of the purpose of the page. You will then see two prompt dialog boxes asking for user input. After you supply the input, your screen should resemble Figure OL6-4, depending on the data input.
+
+The figure shows the Lab 6-3 page in the Chrome browser. It displays a heading that reads "CIW Advanced HTML5 and CSS3 Specialist", a line, and the text that reads "The result of the addNumbers() function is: 45".
+Figure OL6-4: Resulting page after supplying input
+Browser: Test the page to ensure that the addNumbers() function returns the proper result.
+Close your browser and text editor.
+This lab provided an opportunity to use a JavaScript conversion function. You saw that the parseFloat() function is used to convert string values to numerical values.
+	Files for Optional Lab 6-4: Creating an external JavaScript file
+Create a folder named "CIW" and keep the downloaded files in it. Unzip the downloaded zip file to use it.
+
+Optional Lab 6-4: Creating an external JavaScript file
+In this lab, you will convert JavaScript code that is embedded in an HTML lab file to an external script file.
+Windows Explorer: Create a folder named js.
+Open the js folder. Right-click anywhere within the empty folder and select New | Text Document.
+Right-click the New Text Document.txt file and select Rename. Rename the file quiz.js.
+Windows Explorer: Navigate to the Lesson06 folder.
+Double-click the file OL_6-4.htm to open it in your browser. Recall this page that you examined and tested in Lab 6-3 during the lesson. Then close the page.
+Editor: Open the file OL_6-4.htm so you can access the code. Select and cut (not copy) the <script> block from this file. Then paste this <script> block into the quiz.js file that you just created. Delete the <script> and </script> tags so the file contains only the JavaScript code, as shown below:
+
+<script>
+    var numCorrect = 0;
+    function takeTest() {
+        var response = "";
+        var points = 0;
+        var q1 = "What company developed Javascript?";
+        var a1 = "NETSCAPE";
+        var q2 = "Using Javascript operator precedence,\n what is the result of the following expression? 2 + 4 * 6";
+        var a2 = 26;
+        var q3 = "With what object-oriented programming language\n is Javascript often compared and confused?";
+        var a3 = "JAVA";
+        response = prompt(q1, "");
+        if (response) points = runningTotal(response.toUpperCase() == a1 ? 1 : 0);
+        alert(points);
+        response = prompt(q2, "");
+        if (response) points = runningTotal(response == a2 ? 1 : 0);
+        alert(points);
+        response = prompt(q3, "");
+        if (response) points = runningTotal(response.toUpperCase() == a3 ? 1 : 0);
+        alert("You answered a total of " + points + " correctly.");
+        numCorrect = 0;
+        points = 0;
+    }
+    function runningTotal(i) {
+        numCorrect += i;
+        return numCorrect;
+    }
+</script>
+Editor: Save the file quiz.js.
+Editor: Return to the file OL_6-4.htm, which should still be open in your editor.
+Editor: In OL_6-4.htm, locate the <head> section near the top of the document. To link this HTML page to your external script file, you must identify the name and location of the JavaScript file by entering the following <script> element into the <head> section of the HTML file as shown in bold:
+
+<head>
+    <meta charset="utf-8" />
+    <title>Optional Lab 6-4</title>
+    <script src="js/quiz.js"></script>
+</head>
+Save OL_6-4.htm. Notice that the location you specified for the script file (src=js/quiz.js) is relative to the location of the HTML file. That is, the HTML file must navigate down the js folder to find the quiz.js file. The HTML file and the script file do not reside in the same folder.
+
+Tech Note: Depending on the scope of the Website, some developers prefer to keep all files in the same folder, whereas others prefer to place script and formatting files in separate script and CSS folders.
+Browser: Open OL_6-4.htm.
+Browser: Click the Take Quiz button. Respond to each of the prompts. Enter both correct and incorrect answers to check the logic of the quiz.
+Does this quiz work the same as it did when you performed Lab 6-3? Did this external JavaScript file provide different results than the embedded JavaScript in Lab 6-3? The code should function exactly the same. The only difference is the location of the code, which should not affect the functionality of the JavaScript.
+Close your browser and text editor.
+In this lab, you moved embedded JavaScript to an external JavaScript file. All functionality remained the same. Only the location of the code changed.
+
+Many developers favor the technique of linking script files to HTML in order to completely separate script from page content. Similarly, linked CSS is sometimes favored over embedded CSS because it separates formatting from page content. At other times, you may use embedded and linked scripts in the same HTML page. This technique can be useful if you have a complex script that you want to attach to multiple HTML files, as well as a simple script you want to add only to one page, or a simple script you want to run in a different part of the page
+
+Ideally, you would keep content, script, and formatting all separate from each other to simplify corrections and updates to each. However, whether separate files are the most efficient approach ultimately depends on the scope of your site, the purpose of your scripts, and your needs for formatting.
+
